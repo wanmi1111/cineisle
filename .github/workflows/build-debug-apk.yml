@@ -5,6 +5,9 @@ on:
     branches: [ main ]
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build:
     name: Build debug APK
@@ -38,3 +41,11 @@ jobs:
         with:
           name: cineisle-debug-apk
           path: android/app/build/outputs/apk/debug/*.apk
+
+      - name: Publish APK release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: apk-latest
+          name: CineIsle APK (latest)
+          files: android/app/build/outputs/apk/debug/*.apk
+          prerelease: true
